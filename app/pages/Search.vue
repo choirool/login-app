@@ -21,7 +21,7 @@
         @tap="onDrawerButtonTap"
         ios.position="left"
       />
-      <Label class="action-bar-title" text="Dashboard" />
+      <Label class="action-bar-title" text="Search" />
     </ActionBar>
 
     <StackLayout>
