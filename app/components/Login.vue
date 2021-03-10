@@ -6,9 +6,9 @@
         android.systemIcon="ic_menu_back"
         @tap="onButtonTap"
       />
-      <Label text="Login" />
+      <Label text=""></Label>
     </ActionBar>
-    <StackLayout>
+    <StackLayout class="login-page">
       <Label text="Login" class="h1 text-center"></Label>
       <StackLayout class="hr m-10"></StackLayout>
       <RadDataForm
@@ -20,16 +20,29 @@
       </RadDataForm>
       <Button text="Login" class="-primary" @tap="onButtonLoginTap" />
       <ActivityIndicator :busy="loading" />
+      <GridLayout columns="auto,auto" horizontalAlignment="center">
+        <Label text="Do not have account?" col="0"></Label>
+        <Label
+          text="click here"
+          col="1"
+          class="register-link"
+          @tap="onRegiterLinkTap"
+        ></Label>
+      </GridLayout>
     </StackLayout>
   </Page>
 </template>
 
 <script>
+import axios from "redaxios";
+import { device } from "@nativescript/core/platform";
 import Home from "./Home";
+import Register from "./Register";
 
 export default {
   components: {
     Home,
+    Register,
   },
   data() {
     return {
@@ -53,7 +66,6 @@ export default {
                 name: "NonEmpty",
                 params: { errorMessage: "This field is required" },
               },
-              { name: "MaximumLength", params: { length: 10 } },
             ],
           },
           {
@@ -76,7 +88,34 @@ export default {
       this.loading = true;
       this.$refs.loginForm.validateAll().then((result) => {
         if (result) {
-          this.$refs.formComment.commitAll();
+          this.$refs.loginForm.commitAll();
+          this.loginForm.token_name = `${device.model}-${device.deviceType}-${device.uuid}`;
+
+          axios
+            .post("http://10.0.2.2:8000/api/login", this.loginForm, {
+              headers: { accept: "application/json" },
+            })
+            .then((response) => {
+              const { message, data } = response.data;
+              this.$store.dispatch("user/setToken", data.token);
+
+              this.$navigateTo(Home, {
+                clearHistory: true,
+              });
+            })
+            .catch((error) => {
+              const { errors, message } = error.data;
+              this.errorMessage = message;
+              if (error.status == 422) {
+                for (const key in errors) {
+                  if (Object.hasOwnProperty.call(errors, key)) {
+                    const field = this.$refs.loginForm.getPropertyByName(key);
+                    field.errorMessage = errors[key][0];
+                    this.$refs.loginForm.notifyValidated(key, false);
+                  }
+                }
+              }
+            });
         } else {
           this.hasError = true;
         }
@@ -88,6 +127,11 @@ export default {
         clearHistory: true,
       });
     },
+    onRegiterLinkTap() {
+      this.$navigateTo(Register, {
+        clearHistory: true,
+      });
+    },
   },
 };
 </script>
@@ -95,5 +139,10 @@ export default {
 <style lang="scss" scoped>
 .error-message {
   color: red;
+}
+
+.register-link {
+  color: orange;
+  margin-left: 5;
 }
 </style>

@@ -1,25 +1,33 @@
 <template>
-  <Page>
+  <Page class="page" actionBarHidden="true">
     <ActionBar>
       <Label text="Home" />
     </ActionBar>
 
     <StackLayout>
-      <Button text="Login" @tap="onlOginTap" />
-      <Button text="Register" @tap="onRegisterTap" />
+      <GridLayout rows="600, auto">
+        <StackLayout row="0">
+          <slider></slider>
+        </StackLayout>
+        <StackLayout row="1">
+          <Button text="Login" class="login-btn" @tap="onlOginTap" />
+          <Button text="Register" class="register-btn" @tap="onRegisterTap" />
+        </StackLayout>
+      </GridLayout>
     </StackLayout>
   </Page>
 </template>
 
 <script>
-import axios from "redaxios";
 import Login from "./Login";
 import Register from "./Register";
+import Slider from "./Home/Slider";
 
 export default {
   components: {
     Login,
     Register,
+    Slider,
   },
   methods: {
     onlOginTap() {
@@ -48,5 +56,25 @@ export default {
   font-size: 20;
   horizontal-align: center;
   vertical-align: center;
+}
+
+.page {
+  margin-top: 23;
+}
+
+.login-btn {
+  color: rgb(253, 253, 253);
+  background-color: orange;
+  border-color: orange;
+  border-style: solid;
+  border-width: 1;
+}
+
+.register-btn {
+  color: orange;
+  background-color: white;
+  border-color: orange;
+  border-style: solid;
+  border-width: 2;
 }
 </style>
