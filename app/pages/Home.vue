@@ -21,7 +21,7 @@
 <script>
 import Login from "./Login";
 import Register from "./Register";
-import Slider from "./Home/Slider";
+import Slider from "../components/Home/Slider";
 
 export default {
   components: {

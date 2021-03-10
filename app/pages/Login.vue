@@ -38,11 +38,13 @@ import axios from "redaxios";
 import { device } from "@nativescript/core/platform";
 import Home from "./Home";
 import Register from "./Register";
+import Dashboard from "./Dashboard";
 
 export default {
   components: {
     Home,
     Register,
+    Dashboard,
   },
   data() {
     return {
@@ -99,7 +101,7 @@ export default {
               const { message, data } = response.data;
               this.$store.dispatch("user/setToken", data.token);
 
-              this.$navigateTo(Home, {
+              this.$navigateTo(Dashboard, {
                 clearHistory: true,
               });
             })

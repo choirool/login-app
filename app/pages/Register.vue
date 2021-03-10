@@ -6,7 +6,7 @@
         android.systemIcon="ic_menu_back"
         @tap="onButtonTap"
       />
-      <Label text="Register" />
+      <Label text="" />
     </ActionBar>
     <StackLayout>
       <Label text="Register" class="h1 text-center"></Label>
@@ -31,6 +31,15 @@
         </RadDataForm>
         <Button text="Register" class="-primary" @tap="onButtonRegisterTap" />
         <ActivityIndicator :busy="loading" />
+        <GridLayout columns="auto,auto" horizontalAlignment="center">
+          <Label text="Already have account?" col="0"></Label>
+          <Label
+            text="click here to login"
+            col="1"
+            class="login-link"
+            @tap="onLoginLinkTap"
+          ></Label>
+        </GridLayout>
       </StackLayout>
     </StackLayout>
   </Page>
@@ -39,10 +48,12 @@
 <script>
 import axios from "redaxios";
 import Home from "./Home";
+import Login from "./Login";
 
 export default {
   components: {
     Home,
+    Login,
   },
   data() {
     return {
@@ -137,6 +148,11 @@ export default {
         clearHistory: true,
       });
     },
+    onLoginLinkTap() {
+      this.$navigateTo(Login, {
+        clearHistory: true,
+      });
+    },
   },
 };
 </script>
@@ -144,5 +160,10 @@ export default {
 <style lang="scss" scoped>
 .error-message {
   color: red;
+}
+
+.login-link {
+  color: orange;
+  margin-left: 5;
 }
 </style>
