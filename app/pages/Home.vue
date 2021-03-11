@@ -59,7 +59,7 @@ export default {
 }
 
 .page {
-  margin-top: 23;
+  // margin-top: 22;
 }
 
 .login-btn {

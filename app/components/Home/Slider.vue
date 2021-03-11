@@ -19,11 +19,10 @@
       v-for="(slider, i) in sliders"
       :key="i"
     >
-      <Label
-        :text="slider.title"
-        backgroundColor="#50000000"
-        horizontalAlignment="center"
-      />
+      <GridLayout rows="*, auto">
+        <Image :src="`res://${slider.backgroundImage}`" />
+        <Label :text="slider.title" horizontalAlignment="center" />
+      </GridLayout>
     </CarouselItem>
   </Carousel>
 </template>
@@ -33,9 +32,9 @@ export default {
   data() {
     return {
       sliders: [
-        { title: "Slider 1" },
-        { title: "Slider 2" },
-        { title: "Slider 3" },
+        { title: "Slider 1", backgroundImage: "slider_1" },
+        { title: "Slider 2", backgroundImage: "slider_2" },
+        { title: "Slider 3", backgroundImage: "slider_3" },
       ],
     };
   },
