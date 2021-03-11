@@ -51,10 +51,8 @@ export default {
   mounted() {
     SelectedPageService.getInstance().updateSelectedPage("Search");
   },
-  computed: {
-    message() {
-      return "<!-- Page content goes here -->";
-    },
+  create() {
+    console.log(this.user);
   },
   data() {
     return {
@@ -109,6 +107,11 @@ export default {
         console.log(this.person);
         console.log(`Validation result: ${result}`);
       });
+    },
+  },
+  computed: {
+    user() {
+      this.$store.getters.user;
     },
   },
 };

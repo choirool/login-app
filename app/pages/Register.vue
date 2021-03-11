@@ -47,6 +47,7 @@
 
 <script>
 import axios from "redaxios";
+import { hideKeyboard } from "../utils/native-api";
 import Home from "./Home";
 import Login from "./Login";
 
@@ -125,6 +126,7 @@ export default {
               this.successRegister = true;
               this.successMessage = message;
               this.loading = false;
+              hideKeyboard();
             })
             .catch((error) => {
               const { errors, message } = error.data;

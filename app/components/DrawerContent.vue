@@ -2,8 +2,8 @@
     <GridLayout rows="auto, *" class="nt-drawer__content">
         <StackLayout row="0" class="nt-drawer__header">
             <Image class="nt-drawer__header-image fas t-36" src.decode="font://&#xf2bd;"/>
-            <Label class="nt-drawer__header-brand" text="User Name"/>
-            <Label class="nt-drawer__header-footnote" text="username@mail.com"/>
+            <Label class="nt-drawer__header-brand" v-if="user" :text="user.name"/>
+            <Label class="nt-drawer__header-footnote" v-if="user" :text="user.email"/>
         </StackLayout>
 
         <ScrollView row="1" class="nt-drawer__body">
@@ -38,10 +38,10 @@
 
                 <StackLayout class="hr"/>
 
-                <GridLayout columns="auto, *"
+                <GridLayout v-if="user" columns="auto, *"
                             :class="'nt-drawer__list-item' + (selectedPage === 'Settings' ? ' -selected': '')"
                             @tap="onLogoutTap">
-                    <Label col="0" text.decode="&#xf013;" class="nt-icon fas"/>
+                    <Label col="0" text.decode="&#xf2f5;" class="nt-icon fas"/>
                     <Label col="1" text="Logout" class="p-r-10"/>
                 </GridLayout>
             </StackLayout>
@@ -55,6 +55,9 @@ import SelectedPageService from "../utils/selected-page-service";
 import Login from "../pages/Login";
 
 export default {
+  beforeCreate() {
+    this.$store.dispatch("user/setUser");
+  },
   mounted() {
     SelectedPageService.getInstance().selectedPage$.subscribe(
       (selectedPage) => (this.selectedPage = selectedPage)
@@ -79,6 +82,11 @@ export default {
       this.$navigateTo(Login, {
         clearHistory: true,
       });
+    },
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user;
     },
   },
 };

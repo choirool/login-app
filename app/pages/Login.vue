@@ -36,6 +36,7 @@
 <script>
 import axios from "redaxios";
 import { device } from "@nativescript/core/platform";
+import { hideKeyboard } from "../utils/native-api";
 import Home from "./Home";
 import Register from "./Register";
 import Dashboard from "./Dashboard";
@@ -100,7 +101,8 @@ export default {
             .then((response) => {
               const { message, data } = response.data;
               this.$store.dispatch("user/setToken", data.token);
-
+              this.$store.dispatch("user/setUser");
+              hideKeyboard();
               this.$navigateTo(Dashboard, {
                 clearHistory: true,
               });
