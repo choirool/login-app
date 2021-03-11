@@ -50,8 +50,8 @@
 </template>
 
 <script>
-import * as utils from "~/shared/utils";
-import SelectedPageService from "~/shared/selected-page-service";
+import * as drawer from "../utils/drawer";
+import SelectedPageService from "../utils/selected-page-service";
 import Login from "../pages/Login";
 
 export default {
@@ -71,11 +71,11 @@ export default {
       this.$navigateTo(component, {
         clearHistory: true,
       });
-      utils.closeDrawer();
+      drawer.closeDrawer();
     },
     onLogoutTap() {
       this.$store.dispatch("user/logout");
-      utils.closeDrawer();
+      drawer.closeDrawer();
       this.$navigateTo(Login, {
         clearHistory: true,
       });

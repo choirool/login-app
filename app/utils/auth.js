@@ -2,20 +2,20 @@ import { SecureStorage } from "@nativescript/secure-storage";
 
 const storage = new SecureStorage();
 
-export function getToken() {
+export const getToken = () => {
   return storage.getSync({
     key: "token"
   })
 }
 
-export function setToken(token) {
+export const setToken = (token) => {
   return storage.setSync({
     key: "token",
     value: token
   })
 }
 
-export function removeToken() {
+export const removeToken = () => {
   return storage.removeSync({
     key: "token"
   })

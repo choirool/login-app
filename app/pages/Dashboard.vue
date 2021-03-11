@@ -43,8 +43,8 @@
 </template>
 
 <script>
-import * as utils from "~/shared/utils";
-import SelectedPageService from "../shared/selected-page-service";
+import * as drawer from "../utils/drawer";
+import SelectedPageService from "../utils/selected-page-service";
 import { DataFormValidationMode } from "nativescript-ui-dataform";
 
 export default {
@@ -92,7 +92,7 @@ export default {
   },
   methods: {
     onDrawerButtonTap() {
-      utils.showDrawer();
+      drawer.showDrawer();
     },
     onImmediateTap() {
       this.validationMode = DataFormValidationMode.Immediate;
