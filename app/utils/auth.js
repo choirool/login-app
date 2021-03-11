@@ -24,7 +24,7 @@ export const removeToken = () => {
 
 export const getUser = async () => {
   const response = await axios
-    .get("http://10.0.2.2:8000/api/user", {
+    .get(`${APP_URL}/api/user`, {
       headers: { accept: "application/json", Authorization: `Bearer ${getToken()}` },
     })
 

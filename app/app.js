@@ -15,6 +15,8 @@ Vue.use(RadSideDrawer);
 Vue.registerElement('Carousel', () => require('nativescript-carousel').Carousel);
 Vue.registerElement('CarouselItem', () => require('nativescript-carousel').CarouselItem);
 
+console.log(APP_URL);
+
 new Vue({
   // render: h => h('frame', [h(getToken() ? Dashboard : Home)]),
   render: h => h(

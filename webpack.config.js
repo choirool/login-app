@@ -14,6 +14,8 @@ const nativescriptTarget = require("@nativescript/webpack/nativescript-target");
 const { NativeScriptWorkerPlugin } = require("nativescript-worker-loader/NativeScriptWorkerPlugin");
 const hashSalt = Date.now().toString();
 
+const dotenv = require("dotenv");
+
 module.exports = env => {
     // Add your custom Activities, Services and other android app components here.
     const appComponents = env.appComponents || [];
@@ -92,6 +94,35 @@ module.exports = env => {
         entries["tns_modules/@nativescript/core/inspector_modules"] = "inspector_modules";
     };
     console.log(`Bundling application for entryPath ${entryPath}...`);
+
+    dotenv.config()
+    const isUppercase = key => key.toUpperCase() === key;
+    const envKeys = Object.keys(env);
+    let dotEnvValues = envKeys
+        .filter(isUppercase)
+        .reduce((memo, key) => {
+            return { ...memo, [key]: JSON.stringify(env[key]) };
+        }, {})
+
+    const dotEnvkeys = Object.keys(process.env);
+    dotEnvValues = dotEnvkeys
+        .filter(isUppercase)
+        .reduce((memo, key) => {
+            if (memo[key]) {
+                return memo;
+            }
+
+            return { ...memo, [key]: dotEnvValues[key] || JSON.stringify(process.env[key]) };
+        }, { ...dotEnvValues })
+
+    const definitiveEnv = {
+        "global.TNS_WEBPACK": "true",
+        "TNS_ENV": JSON.stringify(mode),
+        "global.isAndroid": platform === 'android',
+        "global.isIOS": platform === 'ios',
+        "process": "global.process",
+        ...dotEnvValues
+    }
 
     let sourceMapFilename = nsWebpack.getSourceMapFilename(hiddenSourceMap, __dirname, dist);
 
@@ -287,18 +318,19 @@ module.exports = env => {
             // ... Vue Loader plugin omitted
             // make sure to include the plugin!
             new VueLoaderPlugin(),
+            new webpack.DefinePlugin(definitiveEnv),
             // Define useful constants like TNS_WEBPACK
-            new webpack.DefinePlugin({
-                "global.TNS_WEBPACK": "true",
-                "global.isAndroid": platform === 'android',
-                "global.isIOS": platform === 'ios',
-                "TNS_ENV": JSON.stringify(mode),
-                "process": "global.process"
-            }),
+            // new webpack.DefinePlugin({
+            //     "global.TNS_WEBPACK": "true",
+            //     "global.isAndroid": platform === 'android',
+            //     "global.isIOS": platform === 'ios',
+            //     "TNS_ENV": JSON.stringify(mode),
+            //     "process": "global.process"
+            // }),
             // Remove all files from the out dir.
-            new CleanWebpackPlugin({ 
-              cleanOnceBeforeBuildPatterns: itemsToClean,
-              verbose: !!verbose
+            new CleanWebpackPlugin({
+                cleanOnceBeforeBuildPatterns: itemsToClean,
+                verbose: !!verbose
             }),
             // Copy assets
             new CopyWebpackPlugin([

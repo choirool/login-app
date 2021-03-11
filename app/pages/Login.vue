@@ -95,7 +95,7 @@ export default {
           this.loginForm.token_name = `${device.model}-${device.deviceType}-${device.uuid}`;
 
           axios
-            .post("http://10.0.2.2:8000/api/login", this.loginForm, {
+            .post(`${APP_URL}/api/login`, this.loginForm, {
               headers: { accept: "application/json" },
             })
             .then((response) => {

@@ -118,7 +118,7 @@ export default {
           this.$refs.registerForm.commitAll();
 
           axios
-            .post("http://10.0.2.2:8000/api/register", this.registerForm, {
+            .post(`${APP_URL}/api/register`, this.registerForm, {
               headers: { accept: "application/json" },
             })
             .then((response) => {
