@@ -1,4 +1,5 @@
 import Vue from "nativescript-vue";
+import VueDevtools from 'nativescript-vue-devtools';
 import RadDataForm from 'nativescript-ui-dataform/vue';
 import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
 import Home from "./pages/Home";
@@ -10,6 +11,7 @@ import { getToken } from "./utils/auth";
 
 Vue.config.silent = (TNS_ENV === 'production');
 
+Vue.use(VueDevtools);
 Vue.use(RadDataForm);
 Vue.use(RadSideDrawer);
 Vue.registerElement('Carousel', () => require('nativescript-carousel').Carousel);

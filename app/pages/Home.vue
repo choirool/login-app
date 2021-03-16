@@ -5,7 +5,7 @@
     </ActionBar>
 
     <StackLayout>
-      <GridLayout rows="600, auto">
+      <GridLayout rows="80*, 20*">
         <StackLayout row="0">
           <slider></slider>
         </StackLayout>

@@ -1,112 +1,64 @@
 <template>
   <Page class="page">
     <ActionBar class="action-bar">
-      <!--
-        Use the NavigationButton as a side-drawer button in Android
-        because ActionItems are shown on the right side of the ActionBar
-        -->
-      <NavigationButton
-        ios:visibility="collapsed"
-        icon="res://menu"
-        @tap="onDrawerButtonTap"
-      />
-      <!--
-        Use the ActionItem for IOS with position set to left. Using the
-        NavigationButton as a side-drawer button in iOS is not possible,
-        because its function is to always navigate back in the application.
-        -->
-      <ActionItem
-        icon="res://menu"
-        android:visibility="collapsed"
-        @tap="onDrawerButtonTap"
-        ios.position="left"
-      />
-      <Label class="action-bar-title" text="Dashboard" />
+      <GridLayout
+        orientation="horizontal"
+        ios:horizontalAlignment="left"
+        android:horizontalAlignment="left"
+        columns="20*, 60*, 20*"
+      >
+        <Label
+          text.decode="&#xf007;"
+          col="0"
+          class="fas text-left"
+          @tap="onDrawerButtonTap"
+        ></Label>
+        <Label text="Dashboard" col="1" class="text-center"></Label>
+        <Label text="" col="2" class="text-center"></Label>
+      </GridLayout>
     </ActionBar>
 
-    <StackLayout>
-      <RadDataForm
-        ref="dataform"
-        :source="person"
-        :metadata="personMetadata"
-        :validationMode="validationMode"
-        commitMode="Manual"
-      >
-      </RadDataForm>
-      <Button
-        text="Validate manually"
-        horizontalAlignment="stretch"
-        @tap="onValidateTap()"
-      ></Button>
-    </StackLayout>
+    <ScrollView>
+      <GridLayout rows="auto, auto, 100">
+        <AbsoluteLayout row="0">
+          <StackLayout class="hero" width="100%" top="0" orientation="vertical">
+            <Label text="Hello Choirool!" class="h1"></Label>
+            <Label text="Lorem ipsum dolor"></Label>
+          </StackLayout>
+          <StackLayout top="125" width="100%">
+            <GridLayout
+              class="balance"
+              orientation="horizontal"
+              columns="auto, *, auto"
+            >
+              <StackLayout col="0">
+                <Label text="Saldo saya" class="text"></Label>
+                <Label text="Rp. 20.000"></Label>
+              </StackLayout>
+              <StackLayout col="1"></StackLayout>
+              <Button text="+ Isi saldo" col="2"></Button>
+            </GridLayout>
+          </StackLayout>
+        </AbsoluteLayout>
+      </GridLayout>
+    </ScrollView>
   </Page>
 </template>
 
 <script>
 import * as drawer from "../utils/drawer";
 import SelectedPageService from "../utils/selected-page-service";
-import { DataFormValidationMode } from "nativescript-ui-dataform";
 
 export default {
   mounted() {
     SelectedPageService.getInstance().updateSelectedPage("Search");
   },
-  create() {
-    console.log(this.user);
-  },
   data() {
-    return {
-      text: "",
-      validationMode: DataFormValidationMode.Immediate,
-      person: {
-        username: "",
-        password: "",
-      },
-      personMetadata: {
-        isReadOnly: false,
-        propertyAnnotations: [
-          {
-            name: "username",
-            displayName: "Nick",
-            index: 0,
-            validators: [
-              { name: "NonEmpty" },
-              { name: "MaximumLength", params: { length: 10 } },
-            ],
-          },
-          {
-            name: "password",
-            displayName: "Password",
-            index: 2,
-            validators: [
-              {
-                name: "NonEmpty",
-              },
-            ],
-          },
-        ],
-      },
-    };
+    return {};
   },
   methods: {
     onDrawerButtonTap() {
       drawer.showDrawer();
-    },
-    onImmediateTap() {
-      this.validationMode = DataFormValidationMode.Immediate;
-    },
-    onOnLostFocusTap() {
-      this.validationMode = DataFormValidationMode.OnLostFocus;
-    },
-    onManualTap() {
-      this.validationMode = DataFormValidationMode.Manual;
-    },
-    onValidateTap() {
-      this.$refs.dataform.validateAll().then((result) => {
-        this.$refs.dataform.commitAll();
-        console.log(this.person);
-        console.log(`Validation result: ${result}`);
-      });
     },
   },
   computed: {
@@ -123,4 +75,46 @@ export default {
 // End custom common variables
 
 // Custom styles
+.page-title {
+  text-align: center;
+}
+
+.hero {
+  background-color: rgb(247, 124, 53);
+  height: 150;
+  padding-left: 10;
+  padding-top: 10;
+
+  Label {
+    color: #fff;
+  }
+}
+
+.balance {
+  background-color: #fff;
+  height: 60;
+  width: 95%;
+  border-radius: 10;
+  padding-left: 10;
+  padding-top: 2;
+
+  StackLayout {
+    Label {
+      &.text {
+        color: rgb(247, 124, 53);
+        font-size: 17;
+      }
+    }
+  }
+
+  Button {
+    color: rgb(247, 124, 53);
+    background-color: #fff;
+    border-color: rgb(247, 124, 53);
+    border-style: solid;
+    border-width: 1;
+    border-radius: 5;
+    height: 30;
+  }
+}
 </style>
