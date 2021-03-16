@@ -40,6 +40,9 @@
             </GridLayout>
           </StackLayout>
         </AbsoluteLayout>
+        <StackLayout row="1" height="700" class="promotion">
+          <Label text="lorem"></Label>
+        </StackLayout>
       </GridLayout>
     </ScrollView>
   </Page>
@@ -75,6 +78,11 @@ export default {
 // End custom common variables
 
 // Custom styles
+
+.page {
+  background-color: rgb(212, 212, 212);
+}
+
 .page-title {
   text-align: center;
 }
@@ -116,5 +124,10 @@ export default {
     border-radius: 5;
     height: 30;
   }
+}
+
+.promotion {
+  height: 200;
+  background-color: red;
 }
 </style>
