@@ -71,7 +71,7 @@
 <script>
 import * as drawer from "../../utils/drawer";
 import SelectedPageService from "../../utils/selected-page-service";
-import { Frame } from "@nativescript/core/ui/frame";
+// import { Frame } from "@nativescript/core/ui/frame";
 
 export default {
   mounted() {
@@ -85,7 +85,7 @@ export default {
       drawer.showDrawer();
     },
     showMoreProduct() {
-      Frame.topmost().notify({ eventName: "morePorductTap" });
+      // Frame.topmost().notify({ eventName: "morePorductTap" });
     },
   },
   computed: {

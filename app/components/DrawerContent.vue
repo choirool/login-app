@@ -68,7 +68,9 @@ export default {
       selectedPage: "",
     };
   },
-  components: {},
+  components: {
+    Login,
+  },
   methods: {
     onNavigationItemTap(component) {
       this.$navigateTo(component, {
@@ -77,6 +79,7 @@ export default {
       drawer.closeDrawer();
     },
     onLogoutTap() {
+      console.log("logout");
       this.$store.dispatch("user/logout");
       drawer.closeDrawer();
       this.$navigateTo(Login, {
