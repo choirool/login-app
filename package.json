@@ -28,6 +28,7 @@
     "category-general"
   ],
   "dependencies": {
+    "@nativescript-community/ui-material-bottomsheet": "^5.3.11",
     "@nativescript/core": "^8.0.8",
     "@nativescript/secure-storage": "^3.0.0",
     "@nativescript/theme": "^2.3.4",

@@ -58,9 +58,14 @@
             <Image src="res://refresh" />
             <Label text="Refund"></Label>
           </StackLayout>
-          <StackLayout col="3" class="product-items" orientation="horizontal">
+          <StackLayout
+            col="3"
+            class="product-items"
+            orientation="horizontal"
+            @tap="showMoreProduct"
+          >
             <Image src="res://more_menu" />
-            <Label text="Lainnya" @tap="showMoreProduct"></Label>
+            <Label text="Lainnya"></Label>
           </StackLayout>
         </GridLayout>
       </GridLayout>
@@ -71,7 +76,7 @@
 <script>
 import * as drawer from "../../utils/drawer";
 import SelectedPageService from "../../utils/selected-page-service";
-// import { Frame } from "@nativescript/core/ui/frame";
+import MoreProduct from "./MoreProduct";
 
 export default {
   mounted() {
@@ -85,7 +90,7 @@ export default {
       drawer.showDrawer();
     },
     showMoreProduct() {
-      // Frame.topmost().notify({ eventName: "morePorductTap" });
+      this.$showBottomSheet(MoreProduct, {});
     },
   },
   computed: {
